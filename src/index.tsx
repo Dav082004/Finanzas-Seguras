@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './index.css';
@@ -10,6 +10,10 @@ import { AuthProvider } from './contexts/AuthContext';
 
 // Componentes y páginas
 import Layout from './components/layout/Layout';
+import LandingPage from './pages/LandingPage';
+import About from './pages/About';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -37,7 +41,12 @@ root.render(
         <Router>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/dashboard" replace />} />
+              <Route index element={<LandingPage />} />
+
+              {/* Rutas públicas */}
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
