@@ -243,11 +243,6 @@ firebase deploy --only hosting
 firebase deploy --only functions
 ```
 
-#### **URLs de Acceso (Después del Despliegue)**
-
-- 🌐 **Aplicación en Producción:** https://tu-project-id.web.app
-- 📊 **Console de Firebase:** https://console.firebase.google.com
-
 ### **5️⃣ Solución de Problemas Comunes**
 
 ```bash
@@ -319,19 +314,3 @@ firebase use --add
 - 🔒 **Seguridad Enterprise** para confianza del cliente
 
 ---
-
-## 👨‍💻 Información del Desarrollador
-
-**Desarrollado por:** David A. - Full Stack Developer  
-**Propósito:** Proyecto académico y de portafolio profesional  
-**Año:** 2025  
-**Tecnologías:** React + TypeScript + Firebase + Gemini IA
-
-### 📞 Contacto
-
-- **GitHub:** [@Dav082004](https://github.com/Dav082004)
-- **Proyecto:** [Finanzas-Seguras](https://github.com/Dav082004/Finanzas-Seguras)
-
----
-
-_Este proyecto representa una solución integral de transformación digital para el sector financiero, demostrando competencias en desarrollo full-stack, arquitectura cloud, y implementación de inteligencia artificial aplicada._
