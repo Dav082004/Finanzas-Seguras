@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Función para verificar si el usuario está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Función para verificar si el usuario es el propietario del recurso
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Función para verificar si el usuario tiene rol de asesor
+    function isAsesor() {
+      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'asesor';
+    }
+    
+    // Reglas para usuarios
+    match /users/{userId} {
+      // Cualquier usuario puede leer/escribir su propio documento
+      allow read, write: if isOwner(userId);
+      // Los asesores pueden leer todos los perfiles
+      allow read: if isAsesor();
+    }
+    
+    // Reglas para transacciones
+    match /transactions/{transactionId} {
+      // Los usuarios pueden leer/escribir sus propias transacciones
+      allow read, write: if isOwner(resource.data.userId);
+      // Los asesores pueden leer las transacciones de los usuarios
+      allow read: if isAsesor() && exists(/databases/$(database)/documents/users/$(resource.data.userId));
+      // Validaciones para crear transacciones
+      allow create: if isAuthenticated() 
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.amount is number
+        && request.resource.data.type in ['ingreso', 'gasto']
+        && request.resource.data.category is string
+        && request.resource.data.description is string;
+    }
+    
+    // Deny all other requests
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
